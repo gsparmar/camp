@@ -6,14 +6,14 @@ const Campground = require('../models/campground');
 
 // connect to db
 const connectDB = () => {
-  try {
-    const db = mongoose.connect(process.env.MONGO_URI).then(() => {
+  mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
       console.log('connected to db - mongoose');
+    })
+    .catch((e) => {
+      console.log(`error`, e);
     });
-  } catch (error) {
-    console.log('error');
-    console.log(error);
-  }
 };
 
 connectDB();
