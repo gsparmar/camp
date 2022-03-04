@@ -1,18 +1,22 @@
+const dotenv = require('dotenv').config();
 const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
 
 // connect to db
-try {
-  mongoose.connect(
-    'mongodb+srv://gadmin:12345@cluster0.ohtec.mongodb.net/campDB?retryWrites=true&w=majority',
-    () => console.log('Database connected - Mongoose')
-  );
-} catch (error) {
-  console.log('error');
-  console.log(error);
-}
+const connectDB = () => {
+  try {
+    const db = mongoose.connect(process.env.MONGO_URI).then(() => {
+      console.log('connected to db - mongoose');
+    });
+  } catch (error) {
+    console.log('error');
+    console.log(error);
+  }
+};
+
+connectDB();
 
 const sample = (array) => array[Math.floor(Math.random() * array.length)];
 // seed the db with random cities
